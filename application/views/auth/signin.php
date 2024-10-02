@@ -6,18 +6,20 @@
 					<div class="text-center">
 						<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
 					</div>
-					<div>
+					<div class="text-center">
 						<?= $this->session->flashdata('message'); ?>
 					</div>
-					<form>
+					<form method="post" action="<?= base_url('auth/signin'); ?>" autocomplete="off">
 						<div class="row my-2">
 							<div class="col">
-								<input type="text" name="email" class="form-control" placeholder="Email">
+								<input type="text" name="email" class="form-control" placeholder="Email" value="<?= set_value('email'); ?>">
+								<?= form_error('email', '<span class="fs-12-px text-red">', '</span>'); ?>
 							</div>
 						</div>
 						<div class="row my-2">
 							<div class="col">
-								<input type="password" name="password" class="form-control" placeholder="Password">
+								<input type="password" name="password" class="form-control" placeholder="Password" value="<?= set_value('password'); ?>">
+								<?= form_error('password', '<span class="fs-12-px text-red">', '</span>'); ?>
 							</div>
 						</div>
 						<div class="row my-2">
