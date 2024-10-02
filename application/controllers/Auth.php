@@ -48,7 +48,12 @@ class Auth extends CI_Controller
 					$data['email'] = $user['email'];
 					$data['role'] = $user['role'];
 					$this->session->set_userdata($data);
-					redirect('member');
+					$userRole = $user['role'];
+					if ($userRole == 'admin') {
+						redirect('admin');
+					} else {
+						redirect('member');
+					}
 				} else {
 					$this->session->set_flashdata('message', 'Wrong Password!');
 					redirect('auth/signin');

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Member extends CI_Controller
+class Admin extends CI_Controller
 {
 	public $session;
 	public $db;
@@ -13,7 +13,7 @@ class Member extends CI_Controller
 			$data['title'] = 'Dashboard';
 			$data['user'] = $this->db->get_where('user', ['email' => $userEmail])->row_array();
 			$this->load->view('templates/header', $data);
-			$this->load->view('member/index');
+			$this->load->view('admin/index');
 			$this->load->view('templates/footer');
 		} else {
 			$this->session->set_flashdata('message', 'Please Login First!');
