@@ -11,7 +11,7 @@ class Admin extends CI_Controller
 		$userEmail = $this->session->userdata('email');
 		if ($userEmail) {
 			$data['title'] = 'Dashboard';
-			$data['user'] = $this->db->get_where('user', ['email' => $userEmail])->row_array();
+			$data['user'] = $this->db->get_where('auth_user', ['email' => $userEmail])->row_array();
 			$this->load->view('templates/header', $data);
 			$this->load->view('admin/index');
 			$this->load->view('templates/footer');

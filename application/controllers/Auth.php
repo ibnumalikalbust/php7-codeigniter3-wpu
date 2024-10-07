@@ -37,7 +37,7 @@ class Auth extends CI_Controller
 	{
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
-		$user = $this->db->get_where('user', ['email' => $email])->row_array();
+		$user = $this->db->get_where('auth_user', ['email' => $email])->row_array();
 		if ($user) {
 			$userActive = $user['is_active'];
 			if($userActive == 1) {
@@ -45,10 +45,11 @@ class Auth extends CI_Controller
 				$passBase = $user['password'];
 				$isCorrectPassword = password_verify($passForm, $passBase);
 				if ($isCorrectPassword) {
-					$data['email'] = $user['email'];
-					$data['role'] = $user['role'];
-					$this->session->set_userdata($data);
-					$userRole = $user['role'];
+					$userEmail = $user['email'];
+					$userRole = $user['auth_role_slug'];
+					$userData['email'] = $userEmail;
+					$userData['role'] = $userRole;
+					$this->session->set_userdata($userData);
 					if ($userRole == 'admin') {
 						redirect('admin');
 					} else {
@@ -72,7 +73,7 @@ class Auth extends CI_Controller
 	{
 		$data['title'] = 'SIGNUP';
 		$this->form_validation->set_rules('name', 'Name', 'required|trim');
-		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]');
+		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[auth_user.email]');
 		$this->form_validation->set_rules('password1', 'Password1', 'required|trim|min_length[3]|matches[password2]');
 		$this->form_validation->set_rules('password2', 'Password2', 'required|trim|min_length[3]|matches[password1]');
 		if ($this->form_validation->run() == false) {
@@ -96,10 +97,10 @@ class Auth extends CI_Controller
 		$post['email'] = htmlspecialchars($this->input->post('email', true));
 		$post['image'] = 'default.jpg';
 		$post['password'] = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
-		$post['role'] = 'member';
+		$post['auth_role_slug'] = 'member';
 		$post['is_active'] = 1;
 		$post['created_at'] = time();
-		$this->db->insert('user', $post);
+		$this->db->insert('auth_user', $post);
 		$this->session->set_flashdata('message', 'Signup Success, Please Login!');
 		redirect('auth/signin');
 	}
