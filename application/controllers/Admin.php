@@ -12,9 +12,11 @@ class Admin extends CI_Controller
 		if ($userEmail) {
 			$data['title'] = 'Dashboard';
 			$data['user'] = $this->db->get_where('auth_user', ['email' => $userEmail])->row_array();
-			$this->load->view('templates/header', $data);
-			$this->load->view('admin/index');
-			$this->load->view('templates/footer');
+			$this->load->view('dashboard/header', $data);
+			$this->load->view('dashboard/sidebar');
+			$this->load->view('dashboard/navbar');
+			$this->load->view('dashboard/profile');
+			$this->load->view('dashboard/footer');
 		} else {
 			$this->session->set_flashdata('message', 'Please Login First!');
 			redirect('auth/signin');
