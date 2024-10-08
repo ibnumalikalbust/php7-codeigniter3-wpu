@@ -14,7 +14,7 @@ class Member extends CI_Controller
 			$data['user'] = $this->db->get_where('auth_user', ['email' => $userEmail])->row_array();
 			$this->load->view('dashboard/header', $data);
 			$this->load->view('dashboard/sidebar');
-			$this->load->view('dashboard/navbar');
+			$this->load->view('dashboard/topbar');
 			$this->load->view('dashboard/profile');
 			$this->load->view('dashboard/footer');
 		} else {
